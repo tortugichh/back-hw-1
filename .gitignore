@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# Virtual environment
+virtualenv/
+vne/
+venv/
+.venv/
+
+# Environments
+.env
+.env.*
+
+# Editor files
+.vscode/
+.idea/
+
+# Database
+*.sqlite3
+*.db
+
+# pytest cache
+.pytest_cache/
+
+# Uvicorn log
+*.log
+
+# build artifacts
+dist/
+build/
+
+# Operating System Files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,7 @@
+langchain==0.2.5
+langchain-openai==0.1.8
+openai==1.35.3
+requests==2.32.3
+pydantic==2.7.1 # Ensure consistent Pydantic version with FastAPI
+python-dotenv==1.0.0
+llama-index==0.10.0 

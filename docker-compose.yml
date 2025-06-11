@@ -41,16 +41,5 @@ services:
       - db
       - redis
 
-  chatbot:
-    build: ./chatbot
-    command: python main.py
-    environment:
-      OPENAI_API_KEY: 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
-      FASTAPI_BASE_URL: http://web:8000/api/v1
-      CHATBOT_USERNAME: chatbot_user
-      CHATBOT_PASSWORD: chatbot_password
-    depends_on:
-      - web
-
 volumes:
   postgres_data: 

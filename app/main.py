@@ -1,32 +1,36 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 
-from app.routers import tasks, auth
-# from app.database import get_db
-# from app.auth import verify_token
-# from app.crud import users as crud_users
-# from app.models.users import User
+from app.routers import tasks, auth, chatbot  # Add chatbot import
 
-# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/v1/auth/token")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    print("Starting up FastAPI application...")
+    yield
+    # Shutdown
+    print("Shutting down FastAPI application...")
 
 app = FastAPI(
     title="ToDo API",
     description="A simple ToDo application with FastAPI",
     version="1.0.0",
+    lifespan=lifespan
 )
 
-
-# async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-#     credentials_exception = HTTPException(
-#         status_code=status.HTTP_401_UNAUTHORIZED,
-#         detail="Could not validate credentials",
-#         headers={"WWW-Authenticate": "Bearer"},
-#     )
-#     username = verify_token(token, credentials_exception)
-#     user = crud_users.get_user_by_username(db, username=username)
-#     if user is None:
-#         raise credentials_exception
-#     return user
-
-
+# Include routers
 app.include_router(tasks.router, prefix="/api/v1", tags=["tasks"])
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
+app.include_router(chatbot.router, prefix="/api/v1/chatbot", tags=["chatbot"])  # Add this line
+
+@app.get("/")
+async def root():
+    return {
+        "message": "Welcome to ToDo API", 
+        "version": "1.0.0",
+        "features": [
+            "Task management",
+            "User authentication",
+            "Chatbot interface"  # Add this feature
+        ]
+    }

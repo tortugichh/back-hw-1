@@ -1,4 +1,6 @@
-# ToDo FastAPI Project
+# ToDo FastAPI Project, Without deploy(жду аппрува гитхаб едукейшн для digital ocean)
+
+
 
 This project is a ToDo application built with FastAPI, following a structured approach for better organization and maintainability.
 

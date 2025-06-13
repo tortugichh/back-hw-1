@@ -14,7 +14,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      POSTGRES_DB: Database1
+      POSTGRES_DB: back
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
 

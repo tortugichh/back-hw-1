@@ -8,7 +8,7 @@ from app import auth
 from app.config import settings
 from app.crud import users as crud_users
 from app.database import get_db
-from app.models.users import Token, UserCreate, UserInDB
+from app.models.users import Token, UserCreate, UserInDB, UserResponse
 
 router = APIRouter()
 
@@ -22,7 +22,7 @@ def authenticate_user(db: Session, username: str, password: str):
 
 
 @router.post("/token", response_model=Token)
-async def login_for_access_token(
+def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
 ):
     user = authenticate_user(db, form_data.username, form_data.password)
@@ -39,9 +39,12 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.post("/register", response_model=UserInDB)
-async def register_user(user: UserCreate, db: Session = Depends(get_db)):
+@router.post("/register", response_model=UserResponse)
+def register_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = crud_users.get_user_by_username(db, user.username)
+    print(db_user)
     if db_user:
+        print("4ota ne to")
         raise HTTPException(status_code=400, detail="Username already registered")
+    
     return crud_users.create_user(db=db, user=user) 

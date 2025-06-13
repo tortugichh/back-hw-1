@@ -5,26 +5,17 @@ import json
 
 from app.crud import tasks as crud_tasks
 from app.schemas import tasks as schemas_tasks
-from app.database import SessionLocal, engine, get_db
+from app.database import get_db, engine
 from app.models import tasks as models_tasks
 from app.dependencies import get_current_user
 from app.models.users import User
 from app.cache import get_redis_client
 from app.tasks import debug_task # Import the Celery task
 
-# Create database tables
+# Create database tables (This should ideally be handled by Alembic in production)
 models_tasks.Base.metadata.create_all(bind=engine)
 
 router = APIRouter()
-
-# Dependency to get the database session
-# This is now defined in app/database.py
-# def get_db():
-#     db = SessionLocal()
-#     try:
-#         yield db
-#     finally:
-#         db.close()
 
 @router.post("/tasks/", response_model=schemas_tasks.Task)
 def create_task(task: schemas_tasks.TaskCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):

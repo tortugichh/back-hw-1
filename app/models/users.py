@@ -31,3 +31,11 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: Optional[str] = None 
+
+
+class UserResponse(BaseModel):
+    id: int
+    username: str
+
+    class Config:
+        from_attributes = True 
